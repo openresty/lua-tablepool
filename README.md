@@ -1,7 +1,7 @@
 Name
 ====
 
-lua-tablepool - Lua table pools for LuaJIT
+lua-tablepool - Lua table recycling pools for LuaJIT
 
 Table of Contents
 =================
