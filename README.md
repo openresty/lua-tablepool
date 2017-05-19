@@ -141,7 +141,7 @@ Please report bugs or submit patches by
 Author
 ======
 
-Yichun "agentzh" Zhang (章亦春) <agentzh@gmail.com>, CloudFlare Inc.
+Yichun "agentzh" Zhang (章亦春) <agentzh@gmail.com>, OpenResty Inc.
 
 [Back to TOC](#table-of-contents)
 
@@ -150,7 +150,7 @@ Copyright and License
 
 This module is licensed under the BSD license.
 
-Copyright (C) 2014-2016, by Yichun "agentzh" Zhang, CloudFlare Inc.
+Copyright (C) 2016-2017, by Yichun "agentzh" Zhang, OpenResty Inc.
 
 All rights reserved.
 
