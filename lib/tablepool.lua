@@ -32,8 +32,9 @@ end
 
 function _M.release(tag, obj, noclear)
     if not obj then
-        error("object empty")
+        error("object empty", 2)
     end
+
     local pool = pools[tag]
     if not pool then
         pool = newtab(4, 1)
