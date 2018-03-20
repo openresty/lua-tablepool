@@ -8,6 +8,18 @@ local pools = newtab(0, 4)
 
 
 function _M.fetch(tag, narr, nrec)
+    if not tag then
+        error("tag empty", 2)
+    end
+
+    if not narr then
+        error("narr empty", 2)
+    end
+
+    if not nrec then
+        error("nrec empty", 2)
+    end
+
     local pool = pools[tag]
     if not pool then
         pool = newtab(4, 1)
@@ -31,9 +43,14 @@ end
 
 
 function _M.release(tag, obj, noclear)
-    if not obj then
-        error("object empty")
+    if not tag then
+        error("tag empty", 2)
     end
+
+    if not obj then
+        error("object empty", 2)
+    end
+
     local pool = pools[tag]
     if not pool then
         pool = newtab(4, 1)
