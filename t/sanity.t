@@ -75,3 +75,22 @@ GET /t
 equal: true old value:test
 --- no_error_log
 [error]
+
+
+
+=== TEST 3: release without clear
+--- http_config eval: $::HttpConfig
+--- config
+    location /t {
+        content_by_lua_block {
+            local tablepool = require "tablepool"
+
+            tablepool.release("tag", nil)
+        }
+    }
+--- request
+GET /t
+--- response_body_like: 500 Internal Server Error
+--- error_code: 500
+--- error_log
+content_by_lua(nginx.conf:45):4: object empty
