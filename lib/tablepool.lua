@@ -61,10 +61,8 @@ function _M.release(tag, obj, noclear)
 
     local len = pool[0] + 1
     if len > max_pool_size then
-        cleartab(pool)
-        pool.c = 0
-        pool[0] = 1
-        len = 1
+        -- discard it simply
+        return
     end
 
     pool[len] = obj
