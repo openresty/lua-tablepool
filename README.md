@@ -150,7 +150,7 @@ Copyright and License
 
 This module is licensed under the BSD license.
 
-Copyright (C) 2016-2019, by Yichun "agentzh" Zhang, OpenResty Inc.
+Copyright (C) 2016-2020, by Yichun "agentzh" Zhang, OpenResty Inc.
 
 All rights reserved.
 
