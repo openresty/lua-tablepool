@@ -1,5 +1,6 @@
 local newtab = require "table.new"
 local cleartab = require "table.clear"
+local setmetatable = setmetatable
 
 
 local _M = newtab(0, 2)
@@ -44,6 +45,7 @@ function _M.release(tag, obj, noclear)
     end
 
     if not noclear then
+        setmetatable(obj, nil)
         cleartab(obj)
     end
 

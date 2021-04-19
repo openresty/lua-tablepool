@@ -94,3 +94,36 @@ GET /t
 --- error_code: 500
 --- error_log
 content_by_lua(nginx.conf:45):4: object empty
+
+
+
+=== TEST 4: clear metatable
+--- http_config eval: $::HttpConfig
+--- config
+    location /t {
+        content_by_lua_block {
+            local tablepool = require "tablepool"
+
+            local old_tb = tablepool.fetch("tag", 0, 10)
+            if not old_tb then
+                ngx.say("failed to fetch table")
+                return
+            end
+
+            local meta = { foo = 1 }
+            meta.__index = meta
+
+            setmetatable(old_tb, meta)
+
+            tablepool.release("tag", old_tb)
+
+            local new_tb = tablepool.fetch("tag", 0, 10)
+            ngx.say("equal: ", new_tb == old_tb, " old value:", new_tb.foo)
+        }
+    }
+--- request
+GET /t
+--- response_body
+equal: true old value:nil
+--- no_error_log
+[error]
