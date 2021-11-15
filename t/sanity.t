@@ -92,8 +92,8 @@ equal: true old value:test
 GET /t
 --- response_body_like: 500 Internal Server Error
 --- error_code: 500
---- error_log
-content_by_lua(nginx.conf:45):4: object empty
+--- error_log eval
+qr/content_by_lua\(nginx.conf:\d+\):4: object empty/
 
 
 
