@@ -44,11 +44,6 @@ function _M.release(tag, obj, noclear)
         pool[0] = 0
     end
 
-    if not noclear then
-        setmetatable(obj, nil)
-        cleartab(obj)
-    end
-
     do
         local cnt = pool.c + 1
         if cnt >= 20000 then
@@ -65,6 +60,11 @@ function _M.release(tag, obj, noclear)
     if len > max_pool_size then
         -- discard it simply
         return
+    end
+
+    if not noclear then
+        setmetatable(obj, nil)
+        cleartab(obj)
     end
 
     pool[len] = obj
