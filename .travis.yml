@@ -31,7 +31,7 @@ env:
     - LD_LIBRARY_PATH=$LUAJIT_LIB:$LD_LIBRARY_PATH
     - TEST_NGINX_SLEEP=0.006
   matrix:
-    - NGINX_VERSION=1.21.4
+    - NGINX_VERSION=1.25.1
 
 install:
     - sudo cpanm --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
@@ -53,7 +53,7 @@ script:
       (cat build.log && exit 1)
   - cd ..
   - export PATH=$PWD/work/nginx/sbin:$PWD/nginx-devel-utils:$PATH
-  - ngx-build $NGINX_VERSION --with-debug --with-cc-opt="-DDEBUG_MALLOC"
+  - ngx-build $NGINX_VERSION --without-pcre2 --with-debug --with-cc-opt="-DDEBUG_MALLOC"
       --with-ipv6 --add-module=../lua-nginx-module  > build.log 2>&1 ||
       (cat build.log && exit 1)
   - prove -I. -r t
