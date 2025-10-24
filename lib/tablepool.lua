@@ -23,11 +23,22 @@ function _M.fetch(tag, narr, nrec)
             pool[len] = nil
             pool[0] = len - 1
             -- ngx.log(ngx.ERR, "HIT")
+
+            if pool.hash and pool.hash[tostring(obj)] then
+                pool.hash[tostring(obj)] = nil
+            end
+
             return obj
         end
     end
 
-    return newtab(narr, nrec)
+    local obj = newtab(narr, nrec)
+    if pool.hash and pool.hash[tostring(obj)] then
+        local addr = tostring(obj)
+        ngx.log(ngx.ERR, "oredge debug, new table, but in pool hash, addr: ", addr, ", tag: ", tag, ", type: ", type(obj), ", bt: ", debug.traceback(), ", prev bt: ", pool.hash[addr])
+    end
+
+    return obj
 end
 
 
@@ -69,6 +80,17 @@ function _M.release(tag, obj, noclear)
 
     pool[len] = obj
     pool[0] = len
+
+    if not pool.hash then
+        pool.hash = newtab(0, 4)
+    end
+
+    local addr = tostring(obj)
+    if pool.hash[addr] then
+        ngx.log(ngx.ERR, "oredge debug, obj already in pool, addr: ", addr, ", tag: ", tag, ", type: ", type(obj), ", bt: ", debug.traceback(), ", prev bt: ", pool.hash[addr])
+    else
+        pool.hash[addr] = debug.traceback()
+    end
 end
 
 
